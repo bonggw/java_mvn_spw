@@ -11,6 +11,7 @@ public class Calculator {
     if (a < 0 || b < 0) {
       a += 10;
     }
+    int t = 10;
     return a + b;
   }
 

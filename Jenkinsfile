@@ -26,13 +26,28 @@ pipeline {
                 ])
             }
         }
-        stage("Staic code analysis") {
+        stage("Staic code analysis (checkstyle)") {
            steps {
                 sh "./mvnw checkstyle:checkstyle"
                  publishHTML (target: [
                     reportDir: 'target/site',
                     reportFiles: 'checkstyle.html',
                     reportName: "CheckStyle Report"
+                ])
+           }
+        }
+        stage("Staic code analysis (pmd,cpd)") {
+           steps {
+                sh "./mvnw pmd:pmd pmd:cpd"
+                 publishHTML (target: [
+                    reportDir: 'target/site',
+                    reportFiles: 'pmd.html',
+                    reportName: "PMD Report"
+                ])
+                publishHTML (target: [
+                    reportDir: 'target/site',
+                    reportFiles: 'cpd.html',
+                    reportName: "CPD Report"
                 ])
            }
         }
