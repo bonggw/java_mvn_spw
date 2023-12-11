@@ -18,13 +18,23 @@ pipeline {
         }
         stage("Code coverage") {
             steps {
-                sh "./mvnw test jacoco:report"
+                sh "./mvnw jacoco:report"
                  publishHTML (target: [
                     reportDir: 'target/site/jacoco',
                     reportFiles: 'index.html',
                     reportName: "JaCoCo Report"
                 ])
             }
+        }
+        stage("Staic code analysis") {
+           steps {
+                sh "./mvnw checkstyle:checkstyle"
+                 publishHTML (target: [
+                    reportDir: 'target/site',
+                    reportFiles: 'checkstyle.html',
+                    reportName: "CheckStyle Report"
+                ])
+           }
         }
     }
 }
