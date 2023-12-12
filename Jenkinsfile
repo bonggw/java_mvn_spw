@@ -10,6 +10,11 @@ pipeline {
         stage("Unit Test(surefire report)") {
             steps {
                 sh "./mvnw surefire-report:report"
+                 publishHTML (target: [
+                    reportDir: 'target/site',
+                    reportFiles: 'surefire-report.html',
+                    reportName: "surefire Report"
+                ])
             }
         }
         stage("Code coverage (JaCoCo)") {
