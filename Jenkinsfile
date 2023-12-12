@@ -38,7 +38,7 @@ pipeline {
         }
         stage("Staic code analysis (pmd,cpd)") {
            steps {
-                sh "./mvnw pmd:pmd pmd:cpd"
+                sh "./mvnw jxr:jxr pmd:pmd pmd:cpd"
                  publishHTML (target: [
                     reportDir: 'target/site',
                     reportFiles: 'pmd.html',

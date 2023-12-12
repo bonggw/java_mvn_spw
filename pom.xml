@@ -17,6 +17,9 @@
   <properties>
     <java.version>17</java.version>
     <pmdVersion>6.55.0</pmdVersion>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
   </properties>
   <dependencies>
     <dependency>
@@ -34,10 +37,16 @@
       <artifactId>junit-jupiter</artifactId>
       <version>5.10.0</version>
     </dependency>
+
   </dependencies>
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>3.3.0</version>
+      </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
@@ -112,20 +121,46 @@
           <failOnViolation>false</failOnViolation>
         </configuration>
       </plugin>
-
     </plugins>
   </build>
+
+
   <reporting>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>3.3.0</version>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
         <version>3.21.2</version>
         <configuration>
-          <outputDirectory>code-analysis/reports/html</outputDirectory>
-          <targetDirectory>code-analysis/reports/</targetDirectory>
-
+          <linkXRef>true</linkXRef>
+          <rulesets>
+            <ruleset>file:///${project.basedir}/src/main/resources/maven-pmd-plugin-bong.xml
+            </ruleset>
+          </rulesets>
+          <targetDirectory>${project.build.directory}/TTTtarget</targetDirectory>
+          <outputDirectory>${project.build.directory}/TTToutput</outputDirectory>
         </configuration>
+        <reportSets>
+          <reportSet><!-- by default, id = "default" -->
+            <reports><!-- select non-aggregate reports -->
+              <report>pmd</report>
+              <report>cpd</report>
+            </reports>
+          </reportSet>
+          <reportSet><!-- aggregate reportSet, to define in poms having modules -->
+            <id>aggregate</id>
+            <inherited>false</inherited> <!-- don't run aggregate in child modules -->
+            <reports>
+              <report>aggregate-pmd</report>
+              <report>aggregate-cpd</report>
+            </reports>
+          </reportSet>
+        </reportSets>
       </plugin>
     </plugins>
   </reporting>
