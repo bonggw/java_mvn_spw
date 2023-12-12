@@ -7,9 +7,9 @@ pipeline {
                 sh "chmod 0744 ./mvnw && ./mvnw compile"
             }
         }
-        stage("Unit Test") {
+        stage("Unit Test(surefire report)") {
             steps {
-                sh "./mvnw test"
+                sh "./mvnw surefire-report:report"
             }
         }
         stage("Code coverage (JaCoCo)") {
