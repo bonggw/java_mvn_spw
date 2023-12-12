@@ -26,7 +26,7 @@ pipeline {
                 ])
             }
         }
-        stage("Staic code analysis (checkstyle)") {
+        stage("Static code analysis (checkstyle)") {
            steps {
                 sh "./mvnw checkstyle:checkstyle"
                  publishHTML (target: [
@@ -36,7 +36,7 @@ pipeline {
                 ])
            }
         }
-        stage("Staic code analysis (pmd,cpd)") {
+        stage("Static code analysis (pmd,cpd)") {
            steps {
                 sh "./mvnw jxr:jxr pmd:pmd pmd:cpd"
                  publishHTML (target: [
