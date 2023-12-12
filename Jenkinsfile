@@ -1,13 +1,9 @@
 pipeline {
      agent any
      stages {
-        stage("Checkout") {
+        stage("Checkout && Compile") {
             steps {
                 git url: 'https://github.com/bonggw/java_mvn_spw.git', branch: 'main'
-            }
-        }
-        stage("Compile") {
-            steps {
                 sh "chmod 0744 ./mvnw && ./mvnw compile"
             }
         }
@@ -16,7 +12,7 @@ pipeline {
                 sh "./mvnw test"
             }
         }
-        stage("Code coverage") {
+        stage("Code coverage (JaCoCo)") {
             steps {
                 sh "./mvnw jacoco:report"
                  publishHTML (target: [
