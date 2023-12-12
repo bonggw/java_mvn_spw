@@ -27,7 +27,7 @@ pipeline {
                 ])
             }
         }
-        stage("Static code analysis (checkstyle)") {
+        stage("Coding rules (checkstyle. google)") {
            steps {
                 sh "./mvnw jxr:jxr checkstyle:checkstyle"
                  publishHTML (target: [
