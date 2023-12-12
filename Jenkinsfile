@@ -28,7 +28,7 @@ pipeline {
         }
         stage("Static code analysis (checkstyle)") {
            steps {
-                sh "./mvnw checkstyle:checkstyle"
+                sh "./mvnw jxr:jxr checkstyle:checkstyle"
                  publishHTML (target: [
                     reportDir: 'target/site',
                     reportFiles: 'checkstyle.html',
